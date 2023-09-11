@@ -55,9 +55,10 @@ if __name__ == '__main__':
     if args.categories:
         print('Categories: ' + args.categories)
         agenda['categories'] = args.categories
+        
     if args.recipients:
         print('Recipients: ' + args.recipients)
-        agenda['recipients'] = args.recipients 
+        agenda['recipients'] = args.recipients
 
     if args.duration:
         print('Duration: ' + str(args.duration))

@@ -131,9 +131,13 @@ def add_item(agenda):
     item.subject = agenda['subject']
     item.body = agenda['body']
     item.location = agenda['location']
-    item.categories = agenda['categories']
-    for n in re.split(', *', agenda['recipients']):
-        item.Recipients.Add(n)
+    
+    if 'categories' in agenda:
+        item.categories = agenda['categories']
+
+    if 'recipients' in agenda:
+        for n in re.split(', *', agenda['recipients']):
+            item.Recipients.Add(n)
 
     if agenda['allday']:
         item.allDayEvent = True
