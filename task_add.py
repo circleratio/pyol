@@ -49,11 +49,10 @@ if __name__ == '__main__':
         print('Body: ' + args.body)
         
     task['StartDate'] = datetime.datetime.today()
-    print('Start: ' + args.start)
+    print('Start: {}'.format(task['StartDate']))
     
     if args.duedate:
         task['DueDate'] = parse_datetime(args.duedate)
         print('Due Date: ' + args.duedate)
     
-    pyol.add_item(task)
-    
+    pyol.add_todo_item(task)
