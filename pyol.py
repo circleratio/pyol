@@ -1,4 +1,5 @@
 import win32com.client
+import pytz
 import re
 
 #
@@ -150,3 +151,17 @@ def add_item(agenda):
         item.duration = agenda['duration']
         item.Save()
         print(item.start.strftime('%Y-%m-%d %H:%M') + ":" + item.subject + " is added")
+
+#
+# Add Calendar
+#
+def add_todo_item(task):
+    outlook = win32com.client.Dispatch("Outlook.Application")
+    
+    item = outlook.CreateItem(3)
+    item.Subject = task['Subject']
+    item.Body = task['Body']
+    item.StartDate = pytz.utc.localize(task['StartDate'])
+    item.DueDate = pytz.utc.localize(task['DueDate'])
+    item.ReminderSet = True
+    item.Save()
