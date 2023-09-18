@@ -1,6 +1,7 @@
-import pyol
 import datetime
 import argparse
+
+import pyol
     
 if __name__ == '__main__':
     task = {
