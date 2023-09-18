@@ -1,29 +1,6 @@
 import pyol
 import datetime
 import argparse
-import re
-
-def parse_datetime(s):
-    m = re.match('\d{4}-\d{1,2}-\d{1,2} +\d{1,2}:\d{1,2}', s)
-    if m:
-        return(datetime.datetime.strptime(s, '%Y-%m-%d %H:%M'))
-    
-    m = re.match('\d{4}-\d{1,2}-\d{1,2}', s)
-    if m:
-        return(datetime.datetime.strptime(s, '%Y-%m-%d'))
-    
-    m = re.match('(mo|tu|we|th|fr|sa|su)', s)
-    if m:
-        print(m.group(1))
-        dow_arg = int('motuwethfrsasu'.find(m.group(1)) / 2)
-        dow_now = datetime.datetime.today().weekday()
-        diff = dow_arg - dow_now
-        if diff <= 0:
-            diff += 7
-        return(datetime.datetime.today() + datetime.timedelta(days=diff))
-    
-    print('Invalid datetime format: ' + s)
-    exit(1)
     
 if __name__ == '__main__':
     task = {
@@ -52,7 +29,7 @@ if __name__ == '__main__':
     print('Start: {}'.format(task['StartDate']))
     
     if args.duedate:
-        task['DueDate'] = parse_datetime(args.duedate)
+        task['DueDate'] = pyol.parse_datetime(args.duedate)
         print('Due Date: ' + args.duedate)
     
     pyol.add_todo_item(task)

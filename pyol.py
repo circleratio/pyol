@@ -1,6 +1,7 @@
 import win32com.client
 import pytz
 import re
+import datetime
 
 #
 # Read Calendar
@@ -165,3 +166,28 @@ def add_todo_item(task):
     item.DueDate = pytz.utc.localize(task['DueDate'])
     item.ReminderSet = True
     item.Save()
+
+#
+# Support functions
+#
+def parse_datetime(s):
+    m = re.match('\d{4}-\d{1,2}-\d{1,2} +\d{1,2}:\d{1,2}', s)
+    if m:
+        return(datetime.datetime.strptime(s, '%Y-%m-%d %H:%M'))
+    
+    m = re.match('\d{4}-\d{1,2}-\d{1,2}', s)
+    if m:
+        return(datetime.datetime.strptime(s, '%Y-%m-%d'))
+    
+    m = re.match('(mo|tu|we|th|fr|sa|su)', s)
+    if m:
+        print(m.group(1))
+        dow_arg = int('motuwethfrsasu'.find(m.group(1)) / 2)
+        dow_now = datetime.datetime.today().weekday()
+        diff = dow_arg - dow_now
+        if diff <= 0:
+            diff += 7
+        return(datetime.datetime.today() + datetime.timedelta(days=diff))
+    
+    print('Invalid datetime format: ' + s)
+    exit(1)
