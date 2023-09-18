@@ -1,10 +1,8 @@
-import win32com.client
 import datetime
 import re
 import argparse
 
 import pyol
-
 
 def parse_datetime(s):
     m = re.match('\d{4}-\d{1,2}-\d{1,2} +\d{1,2}:\d{1,2}', s)
